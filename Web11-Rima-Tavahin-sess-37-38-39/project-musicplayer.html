@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <style>
+        h1 {
+            color: whitesmoke;
+            position: absolute;
+            top: 500px;
+            right: 680px;
+
+        }
+
+        p {
+            color: whitesmoke;
+        }
+
+        body {
+            background: linear-gradient(30deg, purple, red, purple);
+            height: 100%;
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: rgba(255, 255, 255, .15);
+        }
+
+
+        img {
+            width: 500px;
+            height: 400px;
+            border-radius: 10px;
+            position: absolute;
+            left: 470px;
+            top: 90px;
+        }
+
+        p {
+            color: whitesmoke;
+            /* border: 1px solid black; */
+            position: absolute;
+            top: 550px;
+            right: 680px;
+        }
+
+        #prev {
+            background-color: rgba(0, 0, 0, 0.301);
+            /* background: linear-gradient(30deg, purple, red,purple); */
+            border: none;
+            position: absolute;
+            top: 600px;
+            right: 800px;
+        }
+
+        #play {
+            background-color: rgba(0, 0, 0, 0.301);
+            /* background: linear-gradient(30deg, purple, red,purple); */
+            border: none;
+            position: absolute;
+            top: 600px;
+            right: 700px;
+        }
+
+        #next {
+            background-color: rgba(0, 0, 0, 0.301);
+            /* background: linear-gradient(30deg, purple, red,purple); */
+            /* border: 1px solid black; */
+            border: none;
+            position: absolute;
+            top: 600px;
+            right: 585px;
+        }
+
+        .prev {
+            color: whitesmoke;
+            height: 5vh;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main_div">
+
+        <div class="current_song"></div>
+        <img src="" id="cover_photo" />
+        <h1 id="title"></h1>
+        <p id="singer"></p>
+        <button id="prev"><i class="fas fa-backward fa-3x prev"></i></button>
+        <button id="play"><i class="fas fa-play fa-3x prev"></i></button>
+        <button id="next"><i class="fas fa-forward fa-3x prev"></i></button>
+    </div>
+
+    <div class="songs">
+
+    </div>
+    </div>
+
+    <script>
+        let song_image = document.getElementById("cover_photo")
+        let song_title = document.getElementById("title")
+        let song_singer = document.getElementById("singer")
+        let song_play = document.getElementById("play")
+        let song_prev = document.getElementById("prev")
+        let song_next = document.getElementById("next")
+
+
+
+        // console.log(song_play)
+
+
+        let songs_list = [
+
+            {
+                name: 'Love',
+                Image: 'images/taylor_swift_love_story.jpg',
+                Song: 'music/Taylor-Swift-Love-Story.mp3',
+                Singer: 'Taylor Swift'
+            },
+            {
+                name: 'Red',
+                Image: 'images/Taylor_Swift_Red.png',
+                Song: 'music/Taylor-Swift-Red.mp3',
+                Singer: 'Taylor Swift'
+            },
+            {
+                name: 'Lover',
+                Image: 'images/lover_image.jpg',
+                Song: 'music/Lover.mp3',
+                Singer: 'Diljit Diljit'
+            },
+            {
+                name: 'Dreams',
+                Image: 'images/wildest_dreams_taylor.jfif',
+                Song: 'music/Taylor-Swift-Wildest-Dreams.mp3',
+                Singer: 'Taylor Swift'
+            }
+        ]
+
+        let i = 0;
+        let flag = false;
+
+
+        var audio = new Audio(songs_list[i].Song);
+        song_image.src = songs_list[i].Image
+        song_title.innerHTML = songs_list[i].name
+        song_singer.innerHTML = songs_list[i].Singer
+
+        song_play.addEventListener("click", function () {
+
+            if (flag === false) {
+                audio.play()
+                flag = true;
+                // console.log(flag)
+            }
+            else {
+                audio.pause()
+                flag = false;
+                // console.log(flag)
+            }
+        })
+
+        song_next.addEventListener("click", function () {
+
+            audio.pause()
+            flag = false;
+            i = i + 1;
+            if (i >= songs_list.length) {
+
+                i = 0;
+            }
+            console.log(i)
+            song_image.src = songs_list[i].Image
+            song_singer.innerHTML = songs_list[i].Singer
+            song_title.innerHTML = songs_list[i].name
+            audio = new Audio(songs_list[i].Song)
+            if (flag === false) {
+                audio.play()
+                flag = true;
+                // console.log(flag)
+            }
+
+        })
+
+        song_prev.addEventListener("click", function () {
+
+            audio.pause()
+            flag = false;
+            i = i - 1;
+            if (i <= 0) {
+                i = songs_list.length - 1;
+                // console.log(i)
+            }
+            song_image.src = songs_list[i].Image
+            song_singer.innerHTML = songs_list[i].Singer
+            song_title.innerHTML = songs_list[i].name
+            audio = new Audio(songs_list[i].Song)
+            if (flag === false) {
+                audio.play()
+                flag = true;
+                // console.log(flag)
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check BMI</title>
+    <style>
+        body {
+            background-color: rgb(196, 235, 248);
+            text-align: center;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+
+        button {
+            width: 200px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0);
+            outline: none;
+            border-radius: 10px;
+            margin-top: 10px;
+            transition: 1s;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: lightblue;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        input {
+            width: 50%;
+            padding: 5px 14px;
+            border: 2px solid #201f1d;
+            margin-bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.212);
+            outline: none;
+            color: black;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            background-color: white;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            color: #000;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        form p {
+            margin-bottom: 5px;
+        }
+
+        form p:nth-child(1) {
+            margin-top: 0;
+        }
+
+        .panel {
+            margin-top: 20px;
+            /* display: flex; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="panel">
+            <h2 class="text-center" style="margin-bottom: 60px;">** Check your BMI **</h2>
+
+            <form>
+                <div id="weightInput">
+                    <p>Put your weight in here (KG)</p>
+                    <input id="weight" type="text" pattern="[0-9]*" name="a" />
+                </div>
+                <div id="heightInput">
+                    <p>Your height in here (CM)</p>
+                    <input id="height" type="text" pattern="[0-9]*" name="b" />
+                </div>
+                <button type="button" class="btn" onclick="calculate()">Calculate BMI</button>
+            </form>
+            <div id="results" class="text-center" style="margin: 30px;font-size: larger;font-size: 30px;">Your BMI results will appear here</div>
+        </div>
+    </div>
+
+    <script>
+        var weight, height, measure, bmi, error;
+
+        function calculate() {
+            weight = document.getElementById("weight").value;
+            height = document.getElementById("height").value;
+            error = "Please enter some values";
+            height /= 100;
+            height *= height;
+            bmi = weight / height;
+            bmi = bmi.toFixed(1);
+
+            if (bmi <= 18.4) {
+                measure = "Your BMI is " + bmi + " which means " + "you are Underweight";
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                measure = "Your BMI is " + bmi + " which means " + "You are Normal";
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                measure = "Your BMI is " + bmi + " which means " + "You are Overweight";
+            } else if (bmi >= 30) {
+                measure = "Your BMI is " + bmi + " which means " + "You are Obese";
+            }
+
+
+            if (weight === 0) {
+                document.getElementById("results").innerHTML = error;
+            } else if (height === 0) {
+                document.getElementById("results").innerHTML = error;
+            }
+            else {
+
+                document.getElementById("results").innerHTML = measure;
+            }
+            if (weight < 0) {
+                document.getElementById("results").innerHTML = "Negative Values not Allowed";
+            }
+        }
+    </script>
+</body>
+
+</html>

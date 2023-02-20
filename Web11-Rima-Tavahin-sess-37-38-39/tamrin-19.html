@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>findIndex</title>
+    <style>
+        body{
+            background-color: lightsalmon;
+            padding: 20px;
+        }
+        p{
+            font-size: 35px;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+        h2{
+            font-size: 40px;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <h2>findIndex()</h2>
+
+    <p id="demo"></p>
+
+    <script>
+        const Numbers = [3, 10, 18, 20];
+
+        document.getElementById("demo").innerHTML = Numbers.findIndex(checkNumbers);
+
+        function checkNumbers(Numbers) {
+            return Numbers > 18;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(199, 233, 245);
+        }
+        #Result{
+            font-size: 40px;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 id="Result"></h2>
+
+    <script>
+
+        var _MyNumber = [12, 5, 28, 10, 25];
+        var result = document.getElementById("Result");
+        var MySum = 0;
+
+        _MyNumber.forEach(MyResult);
+        result.innerHTML = MySum;
+
+        function MyResult(Numbers) {
+            MySum = MySum + Numbers;
+        }
+
+    </script>
+</body>
+
+</html>

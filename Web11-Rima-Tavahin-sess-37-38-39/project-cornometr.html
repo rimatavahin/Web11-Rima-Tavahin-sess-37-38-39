@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
+
+    <style>
+        body {
+            height: 100%;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            color: #5B616A;
+            background-color: white;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 60%;
+            height: 60vh;
+            text-align: center;
+            margin: 100px 0;
+            border: 5px solid #ABA9C3;
+            border-radius: 50px;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        h4 {
+            color: #ABA9C3;
+            font-size: 16px;
+        }
+
+        .controlBtns {
+            padding: 20px 25px;
+            width: 120px;
+            border: 1px solid #275DAD;
+            border-radius: 500px;
+            font-size: 16px;
+            background-color: #275DAD;
+            color: white;
+            transition: 0.1s ease-in;
+        }
+
+        .controlBtns:hover {
+            border: 1px solid #ABA9C3;
+            background-color: #ABA9C3;
+            color: #275DAD;
+            cursor: pointer;
+        }
+
+        .controlBtns:disabled {
+            border: 1px solid #ABA9C3;
+            background-color: #ABA9C3;
+            color: #275DAD;
+            cursor: not-allowed;
+        }
+
+        .dividerLine {
+            border: 1px solid #ABA9C3;
+            background-color: #ABA9C3;
+        }
+
+        ul {
+            padding: 30px 20px;
+        }
+
+        .lapItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .controlBtns {
+            margin: 0 10px;
+        }
+
+        ul {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="container">
+        <h1 id="mainTimer">00:00.00</h1>
+        <h4 id="lapTimer">00:00.00</h4>
+
+        <section class="controls">
+            <button class="controlBtns" id="flagBtn"><iconify-icon icon="mdi:flag-variant"></iconify-icon></button>
+            <button class="controlBtns" id="startBtn"><iconify-icon
+                    icon="material-symbols:play-arrow-rounded"></iconify-icon></button>
+            <button class="controlBtns" id="resetBtn"><iconify-icon
+                    icon="material-symbols:refresh"></iconify-icon></button>
+        </section>
+
+        <section class="lapListings">
+            <hr class="dividerLine">
+            <ul class="lap" id="lapList"></ul>
+        </section>
+
+    </section>
+
+
+
+</body>
+
+</html>
+<script>
+    let mainTimer = document.getElementById("mainTimer");
+    let lapTimer = document.getElementById("lapTimer");
+    let startBtn = document.getElementById("startBtn");
+    let resetBtn = document.getElementById("resetBtn");
+    let flagBtn = document.getElementById("flagBtn");
+    let lapList = document.getElementById("lapList");
+
+    let time = 0;
+    let initialState = true;
+    let isPaused = false;
+    let flags = [];
+    let timer = null;
+
+    function reprTime(ms) {
+        let date = new Date(Date.UTC(0, 0, 0, 0, 0, 0, ms));
+        return `${String(date.getUTCMinutes()).padStart(2, "0")}:${String(date.getUTCSeconds()).padStart(2, "0")}.${String((date.getUTCMilliseconds() / 10)).padStart(2, "0")}`;
+
+    }
+
+    function startTimer() {
+        timer = setInterval(function () {
+            mainTimer.textContent = reprTime(time);
+            lapTimer.textContent = reprTime(time - flags.at(-1));
+            time += 10;
+        }, 10);
+    }
+
+    function pauseTimer() {
+        isPaused = true;
+        clearInterval(timer);
+        timer = null;
+    }
+
+    function resumeTimer() {
+        isPaused = false;
+        startTimer();
+    }
+
+    function setFlag() {
+        let _flagAt = time;
+        let _index = document.createElement("span");
+        _index.textContent = String(flags.length).padStart(2, "0");
+        let _checkpoint = document.createElement("span");
+        _checkpoint.textContent = reprTime(_flagAt);
+        let _difference = document.createElement("span");
+        _difference.textContent = "+" + reprTime(_flagAt - flags.at(-1));
+        let _flagListItem = document.createElement("li");
+        _flagListItem.classList.add("lapItem");
+        _flagListItem.appendChild(_index);
+        _flagListItem.appendChild(_checkpoint);
+        _flagListItem.appendChild(_difference);
+        lapList.appendChild(_flagListItem);
+        flags.push(_flagAt);
+    }
+
+    startBtn.addEventListener("click", () => {
+        if (!initialState && isPaused) {
+            resumeTimer();
+            startBtn.firstChild.classList.remove("fa-play");
+            startBtn.firstChild.classList.add("fa-pause");
+            resetBtn.disabled = true;
+        } else if (!initialState && !isPaused) {
+            pauseTimer();
+            startBtn.firstChild.classList.remove("fa-pause");
+            startBtn.firstChild.classList.add("fa-play");
+            resetBtn.disabled = false;
+        }
+        if (initialState) {
+            initialState = false;
+            time = 0;
+            flags.push(0);
+            startBtn.firstChild.classList.remove("fa-play");
+            startBtn.firstChild.classList.add("fa-pause");
+            startTimer();
+            resetBtn.disabled = true;
+        }
+    });
+
+    flagBtn.addEventListener("click", () => {
+        if (!initialState) {
+            setFlag();
+        }
+    });
+
+    resetBtn.addEventListener("click", () => {
+        isPaused = false;
+        if (!initialState) {
+            initialState = true;
+            clearInterval(timer);
+        }
+        time = 0;
+        flags = [];
+        timer = null;
+        lapList.innerHTML = "";
+        mainTimer.textContent = reprTime(0);
+        lapTimer.textContent = reprTime(0);
+    });
+
+
+</script>
+</body>
+
+</html>

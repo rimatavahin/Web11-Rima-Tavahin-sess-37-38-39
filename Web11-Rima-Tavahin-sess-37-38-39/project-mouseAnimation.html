@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .shape {
+ 	        width: 30px;
+ 	        height: 30px;
+ 	        border: 3px solid #000;
+ 	        position: absolute;
+ 	        border-radius: 50%;
+ 	        opacity: 0.7;
+            /* background-color: blue,#f00,#6cf,#0f0; */
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.onmousemove = mouseAnim;
+        function mouseAnim(event){
+            let element = document.createElement("div");
+            element.setAttribute("class", "shape");
+	
+            element.style.left=event.clientX+10+"px";
+            element.style.top=event.clientY+10+"px";
+            element.style.transition="all 0.4s linear";
+            document.body.appendChild(element);
+            let colors = ["red", "lightblue", "green", "blue","yellow","orange"];
+            let color = colors[Math.floor(Math.random()*colors.length)];
+            element.style.borderColor=color;
+            setTimeout(function(){
+                element.style.opacity=0;
+            },10)
+}
+</script>
+</body>
+</html>

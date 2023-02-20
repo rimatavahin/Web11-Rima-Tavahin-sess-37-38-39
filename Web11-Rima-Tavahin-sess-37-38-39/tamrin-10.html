@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slideToggle</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <style>
+        body{
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+        #p1,#p2,#p3,#txt {
+            /* margin-top: 20px; */
+            padding: 5px;
+            text-align: center;
+            background-color: rgb(142, 248, 142);
+            border: solid 2px black;
+            color: black;
+            font-size: 20px;
+        }
+
+        #p1 {
+            padding: 40px;
+            display: none;
+        }
+        #p2 {
+            padding: 40px;
+            display: none;
+        }
+        #p3 {
+            padding: 40px;
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+   
+
+        <div id="txt">Menu</div>
+        <div id="p1">Item 1</div>
+        <div id="p2">Item 2</div>
+        <div id="p3">Item 3</div>
+
+
+   
+   
+
+        <script>
+            $(document).ready(function () {
+                $("#txt").click(function () {
+                    $("#p1").slideToggle("slow");
+                    $("#p2").slideToggle("slow");
+                    $("#p3").slideToggle("slow");
+
+
+                });
+            });
+        </script>
+
+   
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+   body{
+    background-color: rgb(199, 240, 253);
+   }
+    p{
+        font-size: 25px;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    }
+   </style>
+</head>
+
+<body>
+    <p><b> Add Name</b></p>
+    <input type="text" id="UserInput">
+    <button onclick="MyCheck();"> Filter</button>
+
+    <p id="Result1"></p>
+    <p id="Result2"></p>
+
+    <script>
+
+        let MyName = ["rima", "narli", "ali", "afshin", "omid"];
+        let result1 = document.getElementById("Result1");
+        let result2 = document.getElementById("Result2");
+
+        result1.innerHTML = MyName;
+
+        function MyCheck() {
+            let user_input = document.getElementById("UserInput").value;
+            result2.innerHTML = MyName.filter(MyFunction);
+            function MyFunction(names) {
+                return names == user_input;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
